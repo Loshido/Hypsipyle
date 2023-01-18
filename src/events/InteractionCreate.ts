@@ -19,7 +19,7 @@ for(const file of commandFiles) {
     const filePath = path.join(commandsPath, file);
     const command: CommandFile | any = require(filePath)
     
-    if ('data' in command && 'execute' in command) commands.set(command.data.name, command);
+    if ('data' in command && 'execute' in command || !command.disabled) commands.set(command.data.name, command);
 }
 
 export = {

@@ -5,6 +5,5 @@ module.exports = {
     once: true,
     execute(cl) {
         console.log(`Logged as ${cl.user.tag}`);
-        cl.user.setActivity("...");
     }
 };

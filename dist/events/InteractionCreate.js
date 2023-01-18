@@ -11,7 +11,7 @@ const commandFiles = node_fs_1.default.readdirSync(commandsPath);
 for (const file of commandFiles) {
     const filePath = node_path_1.default.join(commandsPath, file);
     const command = require(filePath);
-    if ('data' in command && 'execute' in command)
+    if ('data' in command && 'execute' in command || !command.disabled)
         commands.set(command.data.name, command);
 }
 module.exports = {
