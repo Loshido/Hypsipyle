@@ -1,4 +1,4 @@
-import { Events, SlashCommandBuilder, CommandInteraction, Collection } from "discord.js"
+import { Events, SlashCommandBuilder, CommandInteraction, Collection, InteractionType } from "discord.js"
 
 
 import fs from "node:fs"
@@ -26,10 +26,9 @@ for(const file of commandFiles) {
 export = {
     name: Events.InteractionCreate,
     async execute(interaction: CommandInteraction) {
-        if(!interaction.isChatInputCommand()) return
+        if(!interaction.isChatInputCommand() || interaction.type !== InteractionType.ApplicationCommand) return
 
         const InteractionCommand: CommandFile | any = await commands.get(interaction.commandName)
-    
         if(!InteractionCommand){
             console.error(`No command matching ${interaction.commandName} was found.`)
             return;

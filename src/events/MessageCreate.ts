@@ -35,7 +35,10 @@ export = {
                 const affected = await M.update({
                     xp: parseInt(member.dataValues.xp) + 1
                 }, { where: condition })
-                if(affected) await msg.react("🕵️‍♂️")
+                if(affected) {
+                    await msg.react("🕵️‍♂️")
+                    cache.set(CacheKey, Date.now())
+                }
             }
         } else {
             const [member] = await M.findOrCreate({

@@ -6,7 +6,8 @@
   "scripts": {
     "build": "tsc",
     "dev": "node dist",
-    "refresh": "node deploy"
+    "refresh": "node deploy",
+    "build-watch": "tsc --watch"
   },
   "keywords": [],
   "author": "",
