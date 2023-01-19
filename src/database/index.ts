@@ -5,7 +5,9 @@ import { config } from "dotenv"
 config()
 
 const db_connection: string | any = process.env.DB_CONNECTION
-const sequelize = new Sequelize(db_connection)
+const sequelize = new Sequelize(db_connection, {
+    logging: msg => console.log("\x1b[90m", msg, "\x1b[0m")
+})
 
 interface DatabaseModel {
     name: string,

@@ -12,7 +12,8 @@ const commandFiles = fs.readdirSync(commandsPath)
 
 interface CommandFile {
     data: SlashCommandBuilder,
-    execute(interaction: CommandInteraction): void
+    execute(interaction: CommandInteraction): void,
+    disabled?: boolean
 }
 
 for(const file of commandFiles) {

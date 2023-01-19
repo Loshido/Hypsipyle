@@ -7,7 +7,7 @@ const commandFiles = fs.readdirSync('./dist/commands').filter(file => file.endsW
 
 for (const file of commandFiles) {
 	const command = require(`./dist/commands/${file}`);
-	if(!command.disabled) commands.push(command.data.toJSON());
+	commands.push(command.data.toJSON());
 }
 
 const rest = new REST().setToken(process.env.TOKEN);
