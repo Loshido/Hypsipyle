@@ -1,5 +1,5 @@
 import { Events, SlashCommandBuilder, CommandInteraction, Collection, InteractionType } from "discord.js"
-
+import { Sequelize } from "sequelize"
 
 import fs from "node:fs"
 import path from "node:path"
@@ -13,7 +13,8 @@ const commandFiles = fs.readdirSync(commandsPath)
 interface CommandFile {
     data: SlashCommandBuilder,
     execute(interaction: CommandInteraction): void,
-    disabled?: boolean
+    disabled?: boolean,
+    database?: boolean
 }
 
 for(const file of commandFiles) {
@@ -24,8 +25,9 @@ for(const file of commandFiles) {
 }
 
 export = {
+    database: true,
     name: Events.InteractionCreate,
-    async execute(interaction: CommandInteraction) {
+    async execute(sequelize: Sequelize, interaction: CommandInteraction) {
         if(!interaction.isChatInputCommand() || interaction.type !== InteractionType.ApplicationCommand) return
 
         const InteractionCommand: CommandFile | any = await commands.get(interaction.commandName)
@@ -35,7 +37,8 @@ export = {
         }
     
         try {
-            await InteractionCommand.execute(interaction);
+            if(InteractionCommand.database) await InteractionCommand.execute(sequelize, interaction)
+            else await InteractionCommand.execute(interaction);
         } catch (err) {
             console.error(err)
             await interaction.reply({ content: "Une erreur est parvenue lors de l'éxecution de cette commande", ephemeral: true })
